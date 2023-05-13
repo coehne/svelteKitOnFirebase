@@ -1,10 +1,12 @@
 # SvelteKit + Firebase Hosting
 
-This is demo project on how to deploy SvelteKit to Firebase framework aware hosting.
+These are instructions for setting up a SvelteKit demo project and deploy it to Firebase with framework aware hosting.
 
 ## Installation steps
 
-### Setup a [new SvelteKit](https://kit.svelte.dev/docs/creating-a-project) project with
+### Setup SvelteKit
+
+Setup a [new SvelteKit](https://kit.svelte.dev/docs/creating-a-project) project with:
 
 ```zsh
 npm create svelte@latest my-app
@@ -12,19 +14,23 @@ npm create svelte@latest my-app
 
 Use the assistant to configure your desired SvelteKit setup and run `npm install` afterwards.
 
-### Enable the [web framework](https://github.com/FirebaseExtended/firebase-framework-tools#enable-framework-awareness) feature in the Firebase CLI with
+### Prepare Firebase CLI
+
+Enable the [web framework](https://github.com/FirebaseExtended/firebase-framework-tools#enable-framework-awareness) feature in the Firebase CLI with:
 
 ```zsh
 firebase experiments:enable webframeworks
 ```
 
-### Initialize Firebase hosting with
+### Initialize Firebase hosting
+
+Initialize the Firebase hosting with:
 
 ```zsh
 firebase init hosting
 ```
 
-Follow the steps in the CLI to connect to an existing Firebase project or create a new one. Make sure the [Blaze plan](https://firebase.google.com/pricing) of Firebase is enabled for the project.
+Follow the steps in the assistant to connect to an existing Firebase project or create a new one. Make sure the [Blaze plan](https://firebase.google.com/pricing) of Firebase is enabled for the project.
 
 ### Configuring the cloud function
 
@@ -45,14 +51,20 @@ A sample `firebase.json` configuration could look like:
 }
 ```
 
-If you want to reduce cold start time, you could also add `"minInstances": 1` to the configuration. This will keep the cloud function warm. But be aware that this will cost you extra money.
+**Note:** If you want to reduce the start-up time, you could also add `"minInstances": 1` to the configuration. This will keep the cloud function warm. But be aware that this will cost you extra money.
 
 ## Developing
 
-Serve the app locally with
+Serve the app locally with:
 
 ```zsh
 firebase serve
+```
+
+or
+
+```zsh
+firebase emulators:start
 ```
 
 It will reflect your code changes. However, I still needed to manually reload the page in the browser to see the changes.
@@ -61,7 +73,7 @@ It will reflect your code changes. However, I still needed to manually reload th
 
 I used the default auto adapter of SvelteKit which will be a bit lost in detecting a supported production environment. Nonetheless, deploying still worked for me.
 
-Run the firebase deploy command
+Just run the firebase deploy command:
 
 ```zsh
 firebase deploy
@@ -79,7 +91,7 @@ The deployment should now be successful!
 
 ## Troubleshooting
 
-I still got an error when opening the URL of the deployed app. It was something like:
+I still got the following error when opening the URL of the deployed app:
 
 ```text
 Error: Forbidden
@@ -95,11 +107,11 @@ gcloud functions add-invoker-policy-binding functionName \ # Change this to your
       --project="projectId" # Change this to your project id
 ```
 
-Afterwards, the app should be accessible via the URL shown in the Firebase CLI.
+Afterwards, the app should be accessible via the URL shown in the Firebase CLI output.
 
 ## Terraform
 
-If you use Terraform for your GCP Cloud, you might find it helpfull that the deploy command will enable the following Google APIs: - cloudfunctions.googleapis.com - cloudbuild.googleapis.com - artifactregistry.googleapis.com
+If you use Terraform for your GCP setup, you might find it helpful to know that the deploy command will enable the following Google APIs: - cloudfunctions.googleapis.com - cloudbuild.googleapis.com - artifactregistry.googleapis.com
 
 The cloud functions service account will also need the role `roles/artifactregistry.reader`.
 
