@@ -1,6 +1,6 @@
 # SvelteKit + Firebase Hosting
 
-These are instructions for setting up a SvelteKit demo project and deploy it to Firebase with framework aware hosting.
+These are instructions for setting up a SvelteKit demo project and deploying it to Firebase with framework aware hosting.
 
 ## Installation steps
 
