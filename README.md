@@ -30,6 +30,23 @@ Follow the steps in the CLI to connect to an existing Firebase project or create
 
 You can configure the the cloud function in the frameworksBackend object of your `firebase.json` file. It should be analog the the [regular onRequest cloud function configuration](https://firebase.google.com/docs/reference/functions/2nd-gen/node/firebase-functions.https.httpsoptions.md#httpshttpsoptions_interface).
 
+A sample `firebase.json` configuration could look like:
+
+```json
+{
+	"hosting": {
+		"source": ".",
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+		"frameworksBackend": {
+			"region": "europe-west1",
+			"invoker": "public"
+		}
+	}
+}
+```
+
+If you want to reduce cold start time, you could also add `"minInstances": 1` to the configuration. This will keep the cloud function warm. But be aware that this will cost you extra money.
+
 ## Developing
 
 Serve the app locally with
